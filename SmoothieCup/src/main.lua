@@ -14,6 +14,16 @@ local spawnTimer = 0
 local targetX = love.graphics.getWidth() / 2
 local activeFruit = nil
 
+-- Define fruit types
+local fruitTypes = {
+    Strawberry,
+    Lemon,
+    Pear,
+    Apple,
+    Orange,
+    Watermelon,
+}
+
 function love.load()
     --[[
     Initializes the game, setting up the world and loading sprites and collision classes.
@@ -27,20 +37,9 @@ function love.load()
     loadSprites()
     collisionClass()
 
-    -- Define fruit types
-    fruitTypes = {
-        Strawberry,
-        Lemon,
-        Pear,
-        Apple,
-        Orange,
-        Watermelon,
-    }
-
     -- Spawn the first fruit
     world.objects = {}
-    table.insert(world.objects, fruitTypes[love.math.random(1, 3)](world, spawnX, spawnY))
-    activeFruit = world.objects[#world.objects]
+    spawnFruit()
 end
 
 function love.update(dt)
@@ -55,11 +54,7 @@ function love.update(dt)
     end
 
     -- Remove destroyed fruits
-    for i = #world.objects, 1, -1 do
-        if world.objects[i].body == nil or world.objects[i].body:isDestroyed() then
-            table.remove(world.objects, i)
-        end
-    end
+    removeDestroyedFruits()
 
     -- Move active fruit towards target position
     if activeFruit and not activeFruit.fell then
@@ -70,8 +65,7 @@ function love.update(dt)
     if spawnTimer > 0 then
         spawnTimer = spawnTimer - dt
         if spawnTimer <= 0 then
-            table.insert(world.objects, fruitTypes[love.math.random(1, 3)](world, spawnX, spawnY))
-            activeFruit = world.objects[#world.objects]
+            spawnFruit()
         end
     end
 end
@@ -104,6 +98,7 @@ function love.mousepressed(x, y, button)
             end
         end
         spawnTimer = spawnDelay
+        activeFruit:SetType('dynamic')
     end
 end
 
@@ -120,22 +115,30 @@ function loadSprites()
     --[[
     Loads sprites for all fruit types.
     ]]
-    Orange:loadSprites()
-    Strawberry:loadSprites()
-    Lemon:loadSprites()
-    Pear:loadSprites()
-    Apple:loadSprites()
-    Watermelon:loadSprites()
+    for _, fruit in ipairs(fruitTypes) do
+        fruit:loadSprites()
+    end
 end
 
 function collisionClass()
     --[[
     Adds collision classes for all fruit types in the world.
     ]]
-    world:addCollisionClass(Orange.class)
-    world:addCollisionClass(Strawberry.class)
-    world:addCollisionClass(Lemon.class)
-    world:addCollisionClass(Pear.class)
-    world:addCollisionClass(Apple.class)
-    world:addCollisionClass(Watermelon.class)
+    for _, fruit in pairs(fruitTypes) do
+        world:addCollisionClass(fruit.class)
+    end
+end
+
+function spawnFruit()
+    local fruitType = fruitTypes[love.math.random(1, 3)]
+    table.insert(world.objects, fruitType(world, spawnX, spawnY))
+    activeFruit = world.objects[#world.objects]
+end
+
+function removeDestroyedFruits()
+    for i = #world.objects, 1, -1 do
+        if world.objects[i].body == nil or world.objects[i].body:isDestroyed() then
+            table.remove(world.objects, i)
+        end
+    end
 end
