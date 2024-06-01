@@ -59,7 +59,9 @@ function Watermelon:draw()
 end
 
 function Watermelon:SetType(type)
-    self.body:setType(type)
+    if self.body and not self.body:isDestroyed() then
+        self.body:setType(type)
+    end
 end
 
 function Watermelon:moveXTo(targetX, dt)

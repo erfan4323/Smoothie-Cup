@@ -60,7 +60,9 @@ function Lemon:draw()
 end
 
 function Lemon:SetType(type)
-    self.body:setType(type)
+    if self.body and not self.body:isDestroyed() then
+        self.body:setType(type)
+    end
 end
 
 function Lemon:moveXTo(targetX, dt)

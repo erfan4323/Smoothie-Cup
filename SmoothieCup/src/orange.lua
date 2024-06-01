@@ -59,7 +59,9 @@ function Orange:draw()
 end
 
 function Orange:SetType(type)
-    self.body:setType(type)
+    if self.body and not self.body:isDestroyed() then
+        self.body:setType(type)
+    end
 end
 
 function Orange:moveXTo(targetX, dt)

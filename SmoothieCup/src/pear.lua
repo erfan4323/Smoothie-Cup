@@ -60,7 +60,9 @@ function Pear:draw()
 end
 
 function Pear:SetType(type)
-    self.body:setType(type)
+    if self.body and not self.body:isDestroyed() then
+        self.body:setType(type)
+    end
 end
 
 function Pear:moveXTo(targetX, dt)

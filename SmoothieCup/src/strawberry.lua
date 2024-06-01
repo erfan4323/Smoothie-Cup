@@ -62,7 +62,9 @@ function Strawberry:draw()
 end
 
 function Strawberry:SetType(type)
-    self.body:setType(type)
+    if self.body and not self.body:isDestroyed() then
+        self.body:setType(type)
+    end
 end
 
 function Strawberry:moveXTo(targetX, dt)

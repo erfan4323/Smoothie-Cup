@@ -52,7 +52,9 @@ function Apple:loadSprites()
 end
 
 function Apple:SetType(type)
-    self.body:setType(type)
+    if self.body and not self.body:isDestroyed() then
+        self.body:setType(type)
+    end
 end
 
 function Apple:draw()

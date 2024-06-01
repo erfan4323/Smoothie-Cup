@@ -12,6 +12,7 @@ local spawnX, spawnY = love.graphics.getWidth() / 2, 100
 local spawnDelay = 2
 local spawnTimer = 0
 local targetX = love.graphics.getWidth() / 2
+local activeFruit = nil
 
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
@@ -33,10 +34,11 @@ function love.load()
         Watermelon,
     }
 
-
     world.objects = {}
 
     table.insert(world.objects, fruitTypes[love.math.random(1, 3)](world, spawnX, spawnY))
+
+    activeFruit = world.objects[#world.objects]
 end
 
 function love.update(dt)
@@ -55,8 +57,8 @@ function love.update(dt)
     end
 
     for i = #world.objects, 1, -1 do
-        if not world.objects[i].fell then
-            world.objects[i]:moveXTo(targetX, dt)
+        if not world.objects[i].fell and activeFruit then
+            activeFruit:moveXTo(targetX, dt)
             break
         end
     end
@@ -66,26 +68,26 @@ function love.update(dt)
         spawnTimer = spawnTimer - dt
         if spawnTimer <= 0 then
             table.insert(world.objects, fruitTypes[love.math.random(1, 3)](world, spawnX, spawnY))
+            activeFruit = world.objects[#world.objects]
         end
     end
 end
 
 function love.draw()
     World.draw()
-    -- Draw each fruit
+
     for _, fruit in ipairs(world.objects) do
         fruit:draw()
     end
+
     world:draw()
 end
 
 function love.mousepressed(x, y, button)
     if button == 1 then
         targetX = x
-
-
         for i = #world.objects, 1, -1 do
-            if not world.objects[i].fell then
+            if not world.objects[i].fell and activeFruit then
                 world.objects[i]:SetType('dynamic')
                 break
             end
@@ -116,16 +118,4 @@ function collisionClass()
     world:addCollisionClass(Pear.class)
     world:addCollisionClass(Apple.class)
     world:addCollisionClass(Watermelon.class)
-end
-
-function moveElement(srcTable, destTable, index)
-    -- Check if the index is valid
-    if index > 0 and index <= #srcTable then
-        -- Insert the element into the destination table
-        table.insert(destTable, srcTable[index])
-        -- Remove the element from the source table
-        table.remove(srcTable, index)
-    else
-        print("Invalid index")
-    end
 end
