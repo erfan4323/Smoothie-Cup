@@ -8,10 +8,10 @@ local Strawberry = clsc:extend()
 Strawberry.class = 'Strawberry'
 local stawberryImage
 
+--[[
+Initializing a new Strawberry object.
+]]
 function Strawberry:new(world, x, y, type)
-    --[[
-    Initializing a new Strawberry object.
-    ]]
     type = type or 'static'
     local radius = 20
     local res = 0.5
@@ -27,17 +27,17 @@ function Strawberry:new(world, x, y, type)
     self.moved = false
 end
 
+--[[
+Getting the current position of the strawberry.
+]]
 function Strawberry:getPos()
-    --[[
-    Getting the current position of the strawberry.
-    ]]
     return self.body:getX(), self.body:getY()
 end
 
+--[[
+Upgrading the strawberry when it collides with another strawberry.
+]]
 function Strawberry:upgrade()
-    --[[
-    Upgrading the strawberry when it collides with another strawberry.
-    ]]
     if self.body:enter(Strawberry.class) then
         local colData = self.body:getEnterCollisionData(Strawberry.class)
         local otherFruit = colData.collider:getObject()
@@ -54,17 +54,17 @@ function Strawberry:upgrade()
     end
 end
 
+--[[
+Loading the strawberry sprite.
+]]
 function Strawberry:loadSprites()
-    --[[
-    Loading the strawberry sprite.
-    ]]
     stawberryImage = love.graphics.newImage('assets/sprites/strawberry.png')
 end
 
+--[[
+Drawing the strawberry on the screen.
+]]
 function Strawberry:draw()
-    --[[
-    Drawing the strawberry on the screen.
-    ]]
     local x, y = self:getPos()
     local scaleFactor = 1.8
     local scale = self.radius * 2 / stawberryImage:getWidth() * scaleFactor
@@ -72,19 +72,19 @@ function Strawberry:draw()
         stawberryImage:getHeight() / 2)
 end
 
+--[[
+Setting the type of the strawberry's body.
+]]
 function Strawberry:SetType(type)
-    --[[
-    Setting the type of the strawberry's body.
-    ]]
     if self.body and not self.body:isDestroyed() then
         self.body:setType(type)
     end
 end
 
+--[[
+Moving the strawberry horizontally towards the target X position.
+]]
 function Strawberry:moveXTo(targetX, dt)
-    --[[
-    Moving the strawberry horizontally towards the target X position.
-    ]]
     if not self.fell then
         local x, y = self:getPos()
         local wL, wR = World.wall_left_x + 80, World.wall_right_x - 20

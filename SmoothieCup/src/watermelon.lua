@@ -7,10 +7,10 @@ local Watermelon = clsc:extend()
 Watermelon.class = 'Watermelon'
 local watermelonImage
 
+--[[
+Initializing a new Watermelon object.
+]]
 function Watermelon:new(world, x, y, type)
-    --[[
-    Initializing a new Watermelon object.
-    ]]
     type = type or 'static'
     local radius = 45
     local res = 0.5
@@ -24,17 +24,17 @@ function Watermelon:new(world, x, y, type)
     self.fell = false
 end
 
+--[[
+Getting the current position of the watermelon.
+]]
 function Watermelon:getPos()
-    --[[
-    Getting the current position of the watermelon.
-    ]]
     return self.body:getX(), self.body:getY()
 end
 
+--[[
+Upgrading the watermelon when it collides with another watermelon.
+]]
 function Watermelon:upgrade()
-    --[[
-    Upgrading the watermelon when it collides with another watermelon.
-    ]]
     if self.body:enter(Watermelon.class) then
         local colData = self.body:getEnterCollisionData(Watermelon.class)
         local otherFruit = colData.collider:getObject()
@@ -51,17 +51,17 @@ function Watermelon:upgrade()
     end
 end
 
+--[[
+Loading the watermelon sprite.
+]]
 function Watermelon:loadSprites()
-    --[[
-    Loading the watermelon sprite.
-    ]]
     watermelonImage = love.graphics.newImage('assets/sprites/watermelon.png')
 end
 
+--[[
+Drawing the watermelon on the screen.
+]]
 function Watermelon:draw()
-    --[[
-    Drawing the watermelon on the screen.
-    ]]
     local x, y = self:getPos()
     local scaleFactor = 1.8
     local scale = self.radius * 2 / watermelonImage:getWidth() * scaleFactor
@@ -69,19 +69,19 @@ function Watermelon:draw()
         watermelonImage:getHeight() / 2)
 end
 
+--[[
+Setting the type of the watermelon's body.
+]]
 function Watermelon:SetType(type)
-    --[[
-    Setting the type of the watermelon's body.
-    ]]
     if self.body and not self.body:isDestroyed() then
         self.body:setType(type)
     end
 end
 
+--[[
+Moving the watermelon horizontally towards the target X position.
+]]
 function Watermelon:moveXTo(targetX, dt)
-    --[[
-    Moving the watermelon horizontally towards the target X position.
-    ]]
     if not self.fell then
         local x, y = self:getPos()
         local wL, wR = World.wall_left_x + 80, World.wall_right_x - 20

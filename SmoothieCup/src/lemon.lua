@@ -8,10 +8,10 @@ local Lemon = clsc:extend()
 Lemon.class = 'Lemon'
 local lemonImage
 
+--[[
+Initializing a new Lemon object.
+]]
 function Lemon:new(world, x, y, type)
-    --[[
-    Initializing a new Lemon object.
-    ]]
     type = type or 'static'
     local radius = 25
     local res = 0.5
@@ -25,17 +25,17 @@ function Lemon:new(world, x, y, type)
     self.fell = false
 end
 
+--[[
+Getting the current position of the lemon.
+]]
 function Lemon:getPos()
-    --[[
-    Getting the current position of the lemon.
-    ]]
     return self.body:getX(), self.body:getY()
 end
 
+--[[
+Upgrading the lemon when it collides with another lemon.
+]]
 function Lemon:upgrade()
-    --[[
-    Upgrading the lemon when it collides with another lemon.
-    ]]
     if self.body:enter(Lemon.class) then
         local colData = self.body:getEnterCollisionData(Lemon.class)
         local otherFruit = colData.collider:getObject()
@@ -52,17 +52,17 @@ function Lemon:upgrade()
     end
 end
 
+--[[
+Loading the lemon sprite.
+]]
 function Lemon:loadSprites()
-    --[[
-    Loading the lemon sprite.
-    ]]
     lemonImage = love.graphics.newImage('assets/sprites/lemon.png')
 end
 
+--[[
+Drawing the lemon on the screen.
+]]
 function Lemon:draw()
-    --[[
-    Drawing the lemon on the screen.
-    ]]
     local x, y = self:getPos()
     local scaleFactor = 1.8
     local scale = self.radius * 2 / lemonImage:getWidth() * scaleFactor
@@ -70,19 +70,19 @@ function Lemon:draw()
         lemonImage:getHeight() / 2)
 end
 
+--[[
+Setting the type of the lemon's body.
+]]
 function Lemon:SetType(type)
-    --[[
-    Setting the type of the lemon's body.
-    ]]
     if self.body and not self.body:isDestroyed() then
         self.body:setType(type)
     end
 end
 
+--[[
+Moving the lemon horizontally towards the target X position.
+]]
 function Lemon:moveXTo(targetX, dt)
-    --[[
-    Moving the lemon horizontally towards the target X position.
-    ]]
     if not self.fell then
         local x, y = self:getPos()
         local wL, wR = World.wall_left_x + 80, World.wall_right_x - 20

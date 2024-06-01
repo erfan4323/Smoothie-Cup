@@ -24,10 +24,10 @@ local fruitTypes = {
     Watermelon,
 }
 
+--[[
+Initializes the game, setting up the world and loading sprites and collision classes.
+]]
 function love.load()
-    --[[
-    Initializes the game, setting up the world and loading sprites and collision classes.
-    ]]
     love.graphics.setDefaultFilter("nearest", "nearest")
 
     -- Create game world and load necessary components
@@ -42,10 +42,10 @@ function love.load()
     spawnFruit()
 end
 
+--[[
+Updates the game state every frame, including world updates, fruit updates, and spawning logic.
+]]
 function love.update(dt)
-    --[[
-    Updates the game state every frame, including world updates, fruit updates, and spawning logic.
-    ]]
     world:update(dt)
 
     -- Update each fruit
@@ -70,10 +70,10 @@ function love.update(dt)
     end
 end
 
+--[[
+Renders the world and fruits on the screen.
+]]
 function love.draw()
-    --[[
-    Renders the world and fruits on the screen.
-    ]]
     World.draw()
 
     -- Draw each fruit
@@ -85,10 +85,10 @@ function love.draw()
     world:draw()
 end
 
+--[[
+Handles mouse press events to update target positions and trigger fruit spawning.
+]]
 function love.mousepressed(x, y, button)
-    --[[
-    Handles mouse press events to update target positions and trigger fruit spawning.
-    ]]
     if button == 1 then
         targetX = x
         for i = #world.objects, 1, -1 do
@@ -102,28 +102,28 @@ function love.mousepressed(x, y, button)
     end
 end
 
+--[[
+Creates and returns a new game world with specified gravity.
+]]
 function createWorld()
-    --[[
-    Creates and returns a new game world with specified gravity.
-    ]]
     local world = wf.newWorld(0, 0, true)
     world:setGravity(0, 512)
     return world
 end
 
+--[[
+Loads sprites for all fruit types.
+]]
 function loadSprites()
-    --[[
-    Loads sprites for all fruit types.
-    ]]
     for _, fruit in ipairs(fruitTypes) do
         fruit:loadSprites()
     end
 end
 
+--[[
+Adds collision classes for all fruit types in the world.
+]]
 function collisionClass()
-    --[[
-    Adds collision classes for all fruit types in the world.
-    ]]
     for _, fruit in pairs(fruitTypes) do
         world:addCollisionClass(fruit.class)
     end

@@ -8,10 +8,10 @@ local Pear = clsc:extend()
 Pear.class = 'Pear'
 local pearImage
 
+--[[
+Initializing a new Pear object.
+]]
 function Pear:new(world, x, y, type)
-    --[[
-    Initializing a new Pear object.
-    ]]
     type = type or 'static'
     local radius = 30
     local res = 0.5
@@ -25,17 +25,17 @@ function Pear:new(world, x, y, type)
     self.fell = false
 end
 
+--[[
+Getting the current position of the pear.
+]]
 function Pear:getPos()
-    --[[
-    Getting the current position of the pear.
-    ]]
     return self.body:getX(), self.body:getY()
 end
 
+--[[
+Upgrading the pear when it collides with another pear.
+]]
 function Pear:upgrade()
-    --[[
-    Upgrading the pear when it collides with another pear.
-    ]]
     if self.body:enter(Pear.class) then
         local colData = self.body:getEnterCollisionData(Pear.class)
         local otherFruit = colData.collider:getObject()
@@ -52,17 +52,17 @@ function Pear:upgrade()
     end
 end
 
+--[[
+Loading the pear sprite.
+]]
 function Pear:loadSprites()
-    --[[
-    Loading the pear sprite.
-    ]]
     pearImage = love.graphics.newImage('assets/sprites/pear.png')
 end
 
+--[[
+Drawing the pear on the screen.
+]]
 function Pear:draw()
-    --[[
-    Drawing the pear on the screen.
-    ]]
     local x, y = self:getPos()
     local scaleFactor = 1.8
     local scale = self.radius * 2 / pearImage:getWidth() * scaleFactor
@@ -70,19 +70,19 @@ function Pear:draw()
         pearImage:getHeight() / 2)
 end
 
+--[[
+Setting the type of the pear's body.
+]]
 function Pear:SetType(type)
-    --[[
-    Setting the type of the pear's body.
-    ]]
     if self.body and not self.body:isDestroyed() then
         self.body:setType(type)
     end
 end
 
+--[[
+Moving the pear horizontally towards the target X position.
+]]
 function Pear:moveXTo(targetX, dt)
-    --[[
-    Moving the pear horizontally towards the target X position.
-    ]]
     if not self.fell then
         local x, y = self:getPos()
         local wL, wR = World.wall_left_x + 80, World.wall_right_x - 20

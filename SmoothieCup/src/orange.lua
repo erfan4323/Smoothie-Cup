@@ -8,10 +8,10 @@ local Orange = clsc:extend()
 Orange.class = 'Orange'
 local orangeImage
 
+--[[
+Initializing a new Orange object.
+]]
 function Orange:new(world, x, y, type)
-    --[[
-    Initializing a new Orange object.
-    ]]
     type = type or 'static'
     local radius = 40
     local res = 0.5
@@ -25,17 +25,17 @@ function Orange:new(world, x, y, type)
     self.fell = false
 end
 
+--[[
+Getting the current position of the orange.
+]]
 function Orange:getPos()
-    --[[
-    Getting the current position of the orange.
-    ]]
     return self.body:getX(), self.body:getY()
 end
 
+--[[
+Upgrading the orange when it collides with another orange.
+]]
 function Orange:upgrade()
-    --[[
-    Upgrading the orange when it collides with another orange.
-    ]]
     if self.body:enter(Orange.class) then
         local colData = self.body:getEnterCollisionData(Orange.class)
         local otherFruit = colData.collider:getObject()
@@ -52,36 +52,36 @@ function Orange:upgrade()
     end
 end
 
+--[[
+Loading the orange sprite.
+]]
 function Orange:loadSprites()
-    --[[
-    Loading the orange sprite.
-    ]]
     orangeImage = love.graphics.newImage('assets/sprites/orange.png')
 end
 
+--[[
+Drawing the orange on the screen.
+]]
 function Orange:draw()
-    --[[
-    Drawing the orange on the screen.
-    ]]
     local x, y = self:getPos()
     local scaleFactor = 1.8
     local scale = self.radius * 2 / orangeImage:getWidth() * scaleFactor
     love.graphics.draw(orangeImage, x, y, 0, scale, scale, orangeImage:getWidth() / 2, orangeImage:getHeight() / 2)
 end
 
+--[[
+Setting the type of the orange's body.
+]]
 function Orange:SetType(type)
-    --[[
-    Setting the type of the orange's body.
-    ]]
     if self.body and not self.body:isDestroyed() then
         self.body:setType(type)
     end
 end
 
+--[[
+Moving the orange horizontally towards the target X position.
+]]
 function Orange:moveXTo(targetX, dt)
-    --[[
-    Moving the orange horizontally towards the target X position.
-    ]]
     if not self.fell then
         local x, y = self:getPos()
         local wL, wR = World.wall_left_x + 80, World.wall_right_x - 20
