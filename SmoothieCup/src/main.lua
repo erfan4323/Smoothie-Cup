@@ -13,6 +13,7 @@ local spawnDelay = 2
 local spawnTimer = 0
 local targetX = love.graphics.getWidth() / 2
 local activeFruit = nil
+local clicked = false
 
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
@@ -56,11 +57,8 @@ function love.update(dt)
         end
     end
 
-    for i = #world.objects, 1, -1 do
-        if not world.objects[i].fell and activeFruit then
-            activeFruit:moveXTo(targetX, dt)
-            break
-        end
+    if activeFruit and not activeFruit.fell then
+        activeFruit:moveXTo(targetX, dt)
     end
 
     -- Handle spawning delay
