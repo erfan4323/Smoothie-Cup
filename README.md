@@ -6,14 +6,14 @@
 # About Game
 This game is a clone of a game called ***Suika Game*** 
 
-![suika](SmoothieCup\src\assets\md\suika.png)
+![suika](SmoothieCup/src/assets/md/suika.png)
 
 The game concept is that you must drop fruits, and if two of the identical fruits hit each other, they will grow into larger fruits, and you must score as many points as possible.
 
 # State of the game
 I only created the game logic, so there is still a lot more work to be done.
 
-![smoothie](SmoothieCup\src\assets\md\smoothie.png)
+![smoothie](SmoothieCup/src/assets/md/smoothie.png)
 
 # ToDo
 
