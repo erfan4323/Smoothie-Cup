@@ -82,7 +82,7 @@ function love.draw()
     end
 
     -- Draw the world
-    world:draw()
+    --world:draw()
 end
 
 --[[

@@ -39,6 +39,7 @@ function Watermelon:upgrade()
         local colData = self.body:getEnterCollisionData(Watermelon.class)
         local otherFruit = colData.collider:getObject()
         if otherFruit and otherFruit:is(Watermelon) then
+            do return end
             local x1, y1 = self:getPos()
             local x2, y2 = otherFruit:getPos()
             self.body:destroy()
